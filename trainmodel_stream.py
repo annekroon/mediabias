@@ -6,8 +6,11 @@ import re
 
 lettersanddotsonly = re.compile(r'[^a-zA-Z\.]')
 
+PATH = "/mnt/elastic/"
+
+
 def preprocess(s):
-    s = s.replace('!','.').replace('?','.')  # replace ! and ? by . for splitting sentences
+    s = s.lower().replace('!','.').replace('?','.')  # replace ! and ? by . for splitting sentences
     s = lettersanddotsonly.sub(' ',s)
     return s
 
@@ -22,7 +25,7 @@ class train_model():
                   "query": {
                           "bool": {
                                     "filter": [
-                                                { "match": { "doctype": self.doctype}},
+                                                { "match": { "_type": self.doctype}},
                                                 { "range": { "publication_date": { "gte": self.fromdate, "lt":self.todate }}}
                                               ]
                                   }
@@ -32,8 +35,7 @@ class train_model():
 
         self.documents = 0
         self.failed_document_reads = 0
-        
-        self.model = gensim.models.Word2Vec(iter = 1, min_count=15)
+        self.model = gensim.models.Word2Vec(iter = 1, min_count=10)
         self.model.build_vocab(self.get_sentences_vocab())
         print('Build Word2Vec vocabulary')
         self.model.train(self.get_sentences_train(),total_examples=self.model.corpus_count, epochs=self.model.iter)
@@ -67,18 +69,8 @@ class train_model():
         
 
 
-    
-if __name__ == "__main__":
-    logger = logging.getLogger()
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
-    logging.root.setLevel(level=logging.INFO)
-    fromdate = "2006-01-01"
-    todate = "2016-01-01"
-    doctype = "telegraaf (print)"
-
-    path = "/mnt/elastic/"
-    # path = ''
-    filename = "{}word2vec-{}-{}-{}".format(path,doctype,fromdate,todate)
+def train_and_save(fromdate,todate,doctype):
+    filename = "{}word2vec-{}-{}-{}".format(PATH,doctype,fromdate,todate)
     
     casus = train_model(doctype,fromdate,todate)
 
@@ -86,3 +78,15 @@ if __name__ == "__main__":
         casus.model.save(fo)
     print('Saved model')
     print("reopen it with m = gensim.models.Word2Vec.load('{}')".format(filename))
+    
+    
+if __name__ == "__main__":
+    
+    logger = logging.getLogger()
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
+    logging.root.setLevel(level=logging.INFO)
+
+    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "telegraaf (print)")
+    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "volkskrant (print)")
+    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "nrc (print)")
+    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "ad (print)")
