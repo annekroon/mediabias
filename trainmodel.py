@@ -41,7 +41,7 @@ class train_model():
         print('Read {} sentences from {} documents. {} errors occured, probably because they did not contain any text'.format(len(self.sentences),n,errors)) 
         
 
-        self.model = gensim.models.Word2Vec(self.sentences, min_count=1)
+        self.model = gensim.models.Word2Vec(self.sentences, min_count=10)
 
         print('Estimated Word2Vec model')
 
