@@ -45,7 +45,7 @@ class train_model():
         for d in inca.core.database.scroll_query(self.query):
             self.documents += 1
             try:
-                sentences_as_strings = d['_source']['text'].split('.')
+                sentences_as_strings = preprocess(d['_source']['text']).split('.')
                 sentences_as_lists = [s.split() for s in sentences_as_strings]
                 for sentence in sentences_as_lists:
                     yield sentence
@@ -56,7 +56,7 @@ class train_model():
     def get_sentences_train(self):
         for d in inca.core.database.scroll_query(self.query):
             try:
-                sentences_as_strings = d['_source']['text'].split('.')
+                sentences_as_strings = preprocess(d['_source']['text']).split('.')
                 sentences_as_lists = [s.split() for s in sentences_as_strings]
                 for sentence in sentences_as_lists:
                     yield sentence
