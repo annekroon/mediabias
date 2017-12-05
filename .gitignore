@@ -91,3 +91,4 @@ adhoc/
 
 # geen PyCharm-shit
 .idea/
+.Rproj.user
