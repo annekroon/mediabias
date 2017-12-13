@@ -3,60 +3,89 @@
 # media bias
 # Anne Kroon, December 2017
 
+install.packages("gglot2")
 library(fBasics)
 library(plyr)
 library(dplyr)
 library(tidyr)
 library(xlsx)
 library(xtable)
+library("ggplot2")
+library(reshape2)
+
+rm(list=ls())
 
 # IMPORT DATA
 #----------------------------------------------------------------------
 # READING DATA
 
-df <- read.csv("scores_tel.csv", skip=1, stringsAsFactors = FALSE, header = FALSE)
+df <- read.csv("python_output/output_crim.csv", skip=1, stringsAsFactors = FALSE, header = FALSE)
+colnames(df) <- c('att','tar','score')
+
+df <- read.csv("python_output/output_lowstatus.csv", skip=1, stringsAsFactors = FALSE, header = FALSE)
+colnames(df) <- c('att','tar','score')
+
+df <- read.csv("python_output/output_highstatus.csv", skip=1, stringsAsFactors = FALSE, header = FALSE)
+colnames(df) <- c('att','tar','score')
+
+
+df <- read.csv("python_output/output_warm.csv", skip=1, stringsAsFactors = FALSE, header = FALSE)
 colnames(df) <- c('att','tar','score')
 
 # from long to wide
 data_wide <- spread(df,tar,score)
 
 #summing categories. 
-data_wide$m_marok = data_wide$marokkaan + data_wide$marokkanen
-data_wide$m_neder = data_wide$nederlander + data_wide$nederlanders
-data_wide$m_alloch = data_wide$allochtonen + data_wide$allochtoon
-data_wide$m_antil = data_wide$antilliaan + data_wide$antillianen
-data_wide$m_arabier = data_wide$arabier + data_wide$arabieren
-data_wide$m_burger = data_wide$burger + data_wide$burgers
-data_wide$m_westers = data_wide$westers 
-data_wide$m_moslim = data_wide$moslim + data_wide$moslims
-data_wide$m_irak = data_wide$irakees + data_wide$irakezen
-data_wide$m_surinam = data_wide$surinamer + data_wide$surinamers
-data_wide$m_afghaan = data_wide$afghanen + data_wide$afgaan
-data_wide$m_expat = data_wide$expat + data_wide$expats
-data_wide$m_immigrant = data_wide$immigrant + data_wide$immigranten
-data_wide$m_migrant = data_wide$migrant + data_wide$migranten
-data_wide$m_somalier = data_wide$somalier + data_wide$somaliers
-data_wide$m_syrier = data_wide$syrier + data_wide$syriers
+data_wide$m_marok <- data_wide$marokkaan + data_wide$marokkanen
+data_wide$m_turk <- data_wide$turk + data_wide$turken
+data_wide$m_surinam <-  data_wide$surinamer + data_wide$surinamers
+data_wide$m_antil <- data_wide$antilliaan + data_wide$antillianen
+data_wide$m_irak <-  data_wide$irakees + data_wide$irakezen
+data_wide$m_afghaan <-  data_wide$afghanen + data_wide$afgaan
+data_wide$m_syrier <-  data_wide$syrier + data_wide$syriers
+data_wide$m_somalier <-  data_wide$somalier + data_wide$somaliers
+data_wide$m_arabier <- data_wide$arabier + data_wide$arabieren
+data_wide$m_moslim <-  data_wide$moslim + data_wide$moslims
+data_wide$m_vluchteling <-  data_wide$vluchteling + data_wide$vluchtelingen
+data_wide$m_alloch <- data_wide$allochtonen + data_wide$allochtoon
+data_wide$m_immigrant <-  data_wide$immigrant + data_wide$immigranten
+data_wide$m_migrant <-  data_wide$migrant + data_wide$migranten
+data_wide$m_expat <- data_wide$expat + data_wide$expats
+data_wide$m_westers <-  data_wide$westers 
+data_wide$m_neder <- data_wide$nederlander + data_wide$nederlanders
+data_wide$m_belg <- data_wide$belgen + data_wide$belg
+data_wide$m_duitser <- data_wide$duitser + data_wide$duitsers
 
-agg <- data.frame(data_wide$m_marok, 
-                  data_wide$m_neder, 
-                  data_wide$m_alloch, 
-                  data_wide$m_antil, 
-                  data_wide$m_arabier,
-                  data_wide$m_burger, 
-                  data_wide$m_westers, 
-                  data_wide$m_moslim,
+#data_wide$m_burger <-  data_wide$burger + data_wide$burgers
+
+
+agg <- data.frame(data_wide$m_marok,
+                  data_wide$m_turk,
+                  data_wide$m_surinam,
+                  data_wide$m_antil,
                   data_wide$m_irak,
-                  data_wide$m_surinam, 
                   data_wide$m_afghaan,
-                  data_wide$m_expat, 
+                  data_wide$m_syrier,
+                  data_wide$m_somalier,
+                  data_wide$m_arabier,
+                  data_wide$m_moslim,
+                  data_wide$m_vluchteling,
+                  data_wide$m_alloch,
                   data_wide$m_immigrant,
-                  data_wide$m_migrant, 
-                  data_wide$m_somalier, 
-                  data_wide$m_syrier)
-colnames(agg) <- c('marok', 'neder','alloch', 'antil', 'arabier', 'burger','westers','moslim', 'irak', 'surinam', 
-                   'afghaan','expat', 'immigrant', 'migrant', 'somalier', 'syrier')
+                  data_wide$m_migrant,
+                  data_wide$m_expat,
+                  #data_wide$m_westers,
+                  data_wide$m_neder,
+                  data_wide$m_belg,
+                  data_wide$m_duitser)
+colnames(agg) <- c('marok','turk','surinam','antil','irak','afghaan','syrier','somalier','arabier','moslim','vluchteling','alloch','immigrant','migrant','expat',
+                   'neder','belg','duitser')
 
 #summary first results
+basicStats(agg)[c("Mean", "Stdev",  "Minimum", "Maximum"),]
+
 t <- xtable(basicStats(agg)[c("Mean", "Stdev",  "Minimum", "Maximum"),])
+t
+
+ggplot(melt(agg), aes(variable, value)) + geom_boxplot()
 #-------------
