@@ -24,11 +24,11 @@ pairs_crim = list(itertools.product(crim,targ))
 pairs_low = list(itertools.product(low,targ))
 
 
-with open('../ressources/combinations_crime',mode='w') as fo:
+with open('../ressources/combinations_crime.csv',mode='w') as fo:
     for pair in pairs_crim:
         fo.write("{},{}\n".format(pair[0],pair[1]))
         
 
-with open('../ressources/combinations_lowlife',mode='w') as fo:
+with open('../ressources/combinations_lowlife.csv',mode='w') as fo:
     for pair in pairs_low:
         fo.write("{},{}\n".format(pair[0],pair[1]))
