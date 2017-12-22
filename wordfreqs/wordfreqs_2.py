@@ -65,10 +65,10 @@ class cooc():
                 }
         self.documents = 0
         self.failed_document_reads = 0
-        self.tar = []
-        with open('../ressources/target.txt') as fi:
+        self.targ = []
+        with open('../ressources/words_target.txt') as fi:
             for line in fi.readlines():
-                self.tar.append(line.strip().split(','))
+                self.targ.append(line.strip().split(','))
         self.combinations_crime = []
         self.combinations_low = []
         with open('../ressources/combinations_crime.csv') as fi:
@@ -95,14 +95,14 @@ class cooc():
                 
     def distances_per_document(self):
         for doc in self.get_documents():
-            for e in self.targ:
-                if doc['_source']['text'].find(e)>-1:
-                    target = 1
+#            for e in self.targ:
+#                if doc['_source']['text'].find(e)>-1:
+#                    target = 1
             results = []
             for pair in self.combinations_crime:
                 d = get_distance(doc['text'],pair[0],pair[1])
-                if d['distance']:
-                    results.append({'target': target,'distance': d,
+                if d['position_w2']:
+                    results.append({'distance': d,
                                     'doctype':doc['doctype'],
                                     'publication_date':doc['publication_date']})
             yield results
