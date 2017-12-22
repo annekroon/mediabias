@@ -65,6 +65,10 @@ class cooc():
                 }
         self.documents = 0
         self.failed_document_reads = 0
+        self.tar = []
+        with open('../ressources/target.txt') as fi:
+            for line in fi.readlines():
+                self.tar.append(line.strip().split(','))
         self.combinations_crime = []
         self.combinations_low = []
         with open('../ressources/combinations_crime.csv') as fi:
@@ -91,11 +95,14 @@ class cooc():
                 
     def distances_per_document(self):
         for doc in self.get_documents():
+            for e in self.targ:
+                if doc['_source']['text'].find(e)>-1:
+                    target = 1
             results = []
             for pair in self.combinations_crime:
                 d = get_distance(doc['text'],pair[0],pair[1])
                 if d['distance']:
-                    results.append({'distance': d,
+                    results.append({'target': target,'distance': d,
                                     'doctype':doc['doctype'],
                                     'publication_date':doc['publication_date']})
             yield results
@@ -112,11 +119,6 @@ if __name__ == "__main__":
     casus = cooc(fromdate = "2016-01-01", todate = "2016-01-05", doctype = "telegraaf (print)")
 
     distgen = casus.distances_per_document()
-
-    for doc in distgen:
-        if doc['_source']['text'].find('marrokaan')>-1: 
-            yield True
-            print("marrokaan")
             
     with open('output.json',mode='w') as fo:
         fo.write('[')
