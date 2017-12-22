@@ -3,6 +3,7 @@ import inca
 import gensim
 import logging
 import re
+import json
 
 lettersanddotsonly = re.compile(r'[^a-zA-Z\.]')
 
@@ -90,26 +91,18 @@ class cooc():
                 self.failed_document_reads +=1
                 continue
                 
-    def distances_per_document(self)
-        results = []
+    def distances_per_document(self):
         for doc in self.get_documents():
+            results = []
             for pair in self.combinations_crime:
-                    results.append({'distance': get_distance(doc['text'],pair[0],pair[1]),
-                    'doctype':doc['doctype'],
-                    'publication_date':doc['publication_date']})
-        return results
+                d = get_distance(doc['text'],pair[0],pair[1])
+                if d['distance']:
+                    results.append({'distance': d,
+                                    'doctype':doc['doctype'],
+                                    'publication_date':doc['publication_date']})
+            yield results
 
 
-def train_and_save(fromdate,todate,doctype):
-    filename = "{}word2vec-{}-{}-{}".format(PATH,doctype,fromdate,todate)
-    
-    casus = cooc(doctype,fromdate,todate)
-
-    with open(filename, mode='wb') as fo: 
-        casus.model.save(fo)
-    print('Saved model')
-    print("reopen it with m = gensim.models.Word2Vec.load('{}')".format(filename))
-    
     
 if __name__ == "__main__":
     
@@ -117,8 +110,17 @@ if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
     logging.root.setLevel(level=logging.INFO)
 
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "telegraaf (print)")
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "volkskrant (print)")
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "nrc (print)")
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "ad (print)")
-    casus = cooc(fromdate = "2016-01-01", todate = "2016-01-02", doctype = "telegraaf (print)")
+
+    casus = cooc(fromdate = "2016-01-01", todate = "2016-01-05", doctype = "telegraaf (print)")
+
+    distgen = casus.distances_per_document()
+
+    with open('output.json',mode='w') as fo:
+        fo.write('[')
+
+        for result in distgen:
+            if len(result)>0:
+                print(result)
+                fo.write(json.dumps(result))
+                fo.write(',\n')
+        fo.write('[]]')
