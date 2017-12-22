@@ -14,6 +14,9 @@ df.rename(columns = {'distance':'oldshit'},inplace=True)
 for key in keys:
     df[key] = df['oldshit'].map(lambda x: x[key])
 
+df['w1'] = df['pair'].map(lambda x: x[0])
+df['w2'] = df['pair'].map(lambda x: x[1])
+
 print(len(df))
 df.drop('oldshit',axis=1).to_csv('../wordfreqs/output.csv')
 
