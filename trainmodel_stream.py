@@ -41,8 +41,8 @@ class train_model():
         self.model.train(self.get_sentences_train(),total_examples=self.model.corpus_count, epochs=self.model.iter)
         print('Estimated Word2Vec model')
 
-        
-        
+
+
     def get_sentences_vocab(self):
         for d in inca.core.database.scroll_query(self.query):
             self.documents += 1
@@ -65,28 +65,31 @@ class train_model():
             except:
                 continue
 
-        
-        
+
+
 
 
 def train_and_save(fromdate,todate,doctype):
-    filename = "{}word2vec-{}-{}-{}".format(PATH,doctype,fromdate,todate)
-    
+    filename = "{}word2vec_{}_{}_{}".format(PATH,doctype,fromdate,todate)
+
     casus = train_model(doctype,fromdate,todate)
 
-    with open(filename, mode='wb') as fo: 
+    with open(filename, mode='wb') as fo:
         casus.model.save(fo)
     print('Saved model')
     print("reopen it with m = gensim.models.Word2Vec.load('{}')".format(filename))
-    
-    
+
+
 if __name__ == "__main__":
-    
+
     logger = logging.getLogger()
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
     logging.root.setLevel(level=logging.INFO)
 
-    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "telegraaf (print)")
-    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "volkskrant (print)")
-    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "nrc (print)")
-    train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "ad (print)")
+    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "telegraaf (print)")
+    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "volkskrant (print)")
+    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "nrc (print)")
+    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "ad (print)")
+
+    train_and_save(fromdate = "2000-01-01", todate = "2000-12-31", doctype = "ad (print)")
+    train_and_save(fromdate = "2001-01-01", todate = "2001-12-31", doctype = "ad (print)")
