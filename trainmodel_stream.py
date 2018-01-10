@@ -6,7 +6,7 @@ import re
 
 lettersanddotsonly = re.compile(r'[^a-zA-Z\.]')
 
-PATH = "/home/anne/tmpanne/peryear"
+PATH = "/home/anne/tmpanne/peryear/"
 
 
 def preprocess(s):

@@ -7,7 +7,7 @@ import json
 
 lettersanddotsonly = re.compile(r'[^a-zA-Z\.]')
 
-PATH = "/mnt/elastic/"
+PATH = "/home/anne/tmpanne/peryear/"
 
 
 def preprocess(s):
@@ -16,30 +16,28 @@ def preprocess(s):
     return s
 
 
-
-
 def get_distance(doc, w1, w2):
     ''' returns a dict with the distance between two words in a given document'''
 
     words = doc.split()
-    
+
     if w1 in words:
         position_w1 = words.index(w1)
     else:
         position_w1 = None
 
-    
+
     if w2 in words:
         position_w2 = words.index(w2)
     else:
         position_w2 = None
-        
-        
+
+
     if position_w1 and position_w2:
         distance = abs(words.index(w2) - words.index(w1))
     else:
         distance = None
-    
+
     return {'pair':(w1,w2),
             'distance':distance,
             'position_w1':position_w1,
@@ -75,9 +73,9 @@ class cooc():
         with open('../ressources/combinations_lowlife.csv') as fi:
             for line in fi.readlines():
                 self.combinations_low.append(tuple(line.strip().split(',')))
-        
-      
-        
+
+
+
     def get_documents(self):
         data = {}
         for d in inca.core.database.scroll_query(self.query):
@@ -90,7 +88,7 @@ class cooc():
             except:
                 self.failed_document_reads +=1
                 continue
-                
+
     def distances_per_document(self):
         for doc in self.get_documents():
             results = []
@@ -103,19 +101,19 @@ class cooc():
             yield results
 
 
-    
+
 if __name__ == "__main__":
-    
+
     logger = logging.getLogger()
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
     logging.root.setLevel(level=logging.INFO)
 
 
-    casus = cooc(fromdate = "2016-01-01", todate = "2016-01-05", doctype = "telegraaf (print)")
+    casus = cooc(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "nrc (print)")
 
     distgen = casus.distances_per_document()
 
-    with open('output.json',mode='w') as fo:
+    with open('output_wordfreqs_nrc.json',mode='w') as fo:
         fo.write('[')
 
         for result in distgen:

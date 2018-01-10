@@ -8,9 +8,9 @@ and creates a new file with combinations of those
 
 import itertools
 
-crim = [line.strip() for line in open('../ressources/words_crime.txt').readlines() if len(line)>1]
-low  = [line.strip() for line in open('../ressources/words_lowlife.txt').readlines() if len(line)>1]
-targ  = [line.strip() for line in open('../ressources/words_target.txt').readlines() if len(line)>1]
+crim = [line.strip() for line in open('ressources/words_crime.txt').readlines() if len(line)>1]
+low  = [line.strip() for line in open('ressources/words_lowlife.txt').readlines() if len(line)>1]
+targ  = [line.strip() for line in open('ressources/words_target.txt').readlines() if len(line)>1]
 
 
 # remove duplicates
@@ -27,7 +27,7 @@ pairs_low = list(itertools.product(low,targ))
 with open('../ressources/combinations_crime.csv',mode='w') as fo:
     for pair in pairs_crim:
         fo.write("{},{}\n".format(pair[0],pair[1]))
-        
+
 
 with open('../ressources/combinations_lowlife.csv',mode='w') as fo:
     for pair in pairs_low:
