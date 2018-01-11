@@ -44,9 +44,6 @@ def get_distance(doc, w1, w2):
             'position_w2':position_w2,
             'length':len(words)}
 
-
-
-
 class cooc():
 
     def __init__(self, doctype, fromdate,todate):
@@ -93,9 +90,11 @@ class cooc():
         for doc in self.get_documents():
             results = []
             for pair in self.combinations_crime:
-                d = get_distance(doc['text'],pair[0],pair[1])
-                if d['distance']:
-                    results.append({'distance': d,
+                c = get_distance(doc['text'],pair[0],pair[1])
+            for pair in self.combinations_low:
+                l = get_distance(doc['text'],pair[0],pair[1])
+                if c['distance'] or l['distance']:
+                    results.append({'distance': c,
                                     'doctype':doc['doctype'],
                                     'publication_date':doc['publication_date']})
             yield results
