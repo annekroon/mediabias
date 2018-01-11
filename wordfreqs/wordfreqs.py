@@ -93,8 +93,9 @@ class cooc():
                 c = get_distance(doc['text'],pair[0],pair[1])
             for pair in self.combinations_low:
                 l = get_distance(doc['text'],pair[0],pair[1])
-                if c['distance'] or l['distance']:
-                    results.append({'distance': c,
+                if 'distance' in c or 'distance' in l:
+                    results.append({'distance_criminal': c,
+                                    'distance_low': l,
                                     'doctype':doc['doctype'],
                                     'publication_date':doc['publication_date']})
             yield results
