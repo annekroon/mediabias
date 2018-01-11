@@ -32,8 +32,9 @@ class word2vec_analyzer():
 
     def get_model(self):
         '''yields a dict with one item. key is the filename, value the gensim model'''
+        filenames = [e for e in os.listdir(basepath) if not e.startswith('.')]
 
-        for fname in os.listdir(basepath):
+        for fname in filenames:
             model = {}
             path = os.path.join(basepath, fname)
             model['gensimmodel'] = gensim.models.Word2Vec.load(path)
