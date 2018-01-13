@@ -11,7 +11,7 @@ print(sys.executable)
 print(sys.version)
 import pandas as pd
 
-basepath = "/Users/admin/trained_data/tel"
+basepath = "/Users/admin/trained_data/twoyears"
 
 class word2vec_analyzer():
     '''This class provides a Bias Analyzer for Word2Vec models.'''
@@ -58,7 +58,7 @@ class word2vec_analyzer():
                 except KeyError:
                     r = 0
                 results.append({'pair': (pair[0],pair[1]),
-                            'word2vec_score': r,
+                            'word2vec_score_crim': r,
                             'doctype': model['doctype'],
                             'fromdate': model['fromdate'],
                             'todate': model['todate']})
