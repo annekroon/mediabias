@@ -35,14 +35,13 @@ def get_distance(doc, w1, w2):
 
     if position_w1 and position_w2:
         distance = abs(words.index(w2) - words.index(w1))
-    else:
-        distance = None
-
-    return {'pair':(w1,w2),
+        return {'pair':(w1,w2),
             'distance':distance,
             'position_w1':position_w1,
             'position_w2':position_w2,
             'length':len(words)}
+    else:
+        return None
 
 class cooc():
 
