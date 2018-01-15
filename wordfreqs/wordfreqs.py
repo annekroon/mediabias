@@ -87,7 +87,7 @@ class cooc():
 
     def distances_per_document(self):
         for doc in self.get_documents():
-            results = []
+            result = {}
             c = []
             l = []
             for pair in self.combinations_crime:
@@ -98,20 +98,19 @@ class cooc():
                 if ltemp: l.append(ltemp)
                 
             if len(c) >0 and len(l) == 0:
-                results.append({'distance_criminal': c,
-                                    'doctype':doc['doctype'],
-                                    'publication_date':doc['publication_date']})
+                result = {'distance_criminal': c,
+                          'doctype':doc['doctype'],
+                          'publication_date':doc['publication_date']}
             elif len(c) == 0 and len(l) > 0:
-                results.append({'distance_low': l,
-                                    'doctype':doc['doctype'],
-                                    'publication_date':doc['publication_date']})
+                result = {'distance_low': l,
+                          'doctype':doc['doctype'],
+                          'publication_date':doc['publication_date']}
             elif len(c) >0 and len(l) > 0:
-                results.append({'distance_criminal': c,
-                                'distance_los':l,
-                                    'doctype':doc['doctype'],
-                                    'publication_date':doc['publication_date']})
-
-            yield results
+                result = {'distance_criminal': c,
+                          'distance_low':l,
+                          'doctype':doc['doctype'],
+                          'publication_date':doc['publication_date']}
+            yield result
 
 
 
