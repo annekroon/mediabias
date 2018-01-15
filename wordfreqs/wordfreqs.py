@@ -92,7 +92,7 @@ class cooc():
             l = []
             for pair in self.combinations_crime:
                 ctemp = get_distance(doc['text'],pair[0],pair[1])
-                if ctemp: c.append(ltemp)
+                if ctemp: c.append(ctemp)
             for pair in self.combinations_low:
                 ltemp = get_distance(doc['text'],pair[0],pair[1])
                 if ltemp: l.append(ltemp)
