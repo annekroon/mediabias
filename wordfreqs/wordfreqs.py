@@ -92,7 +92,8 @@ class cooc():
                 c = get_distance(doc['text'],pair[0],pair[1])
             for pair in self.combinations_low:
                 l = get_distance(doc['text'],pair[0],pair[1])
-                if 'distance' in c or 'distance' in l:
+                # if 'distance' in c or 'distance' in l:
+                if type(c) is not None and type(l) is not None:
                     results.append({'distance_criminal': c,
                                     'distance_low': l,
                                     'doctype':doc['doctype'],
