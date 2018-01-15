@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
         for result in distgen:
             if len(result)>0:
-                print(result)
+                # print(result)
                 fo.write(json.dumps(result))
                 fo.write(',\n')
         fo.write('[]]')
