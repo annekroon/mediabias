@@ -88,16 +88,29 @@ class cooc():
     def distances_per_document(self):
         for doc in self.get_documents():
             results = []
+            c = []
+            l = []
             for pair in self.combinations_crime:
-                c = get_distance(doc['text'],pair[0],pair[1])
+                ctemp = get_distance(doc['text'],pair[0],pair[1])
+                if ctemp: c.append(ltemp)
             for pair in self.combinations_low:
-                l = get_distance(doc['text'],pair[0],pair[1])
-                # if 'distance' in c or 'distance' in l:
-                if type(c) is not None and type(l) is not None:
-                    results.append({'distance_criminal': c,
-                                    'distance_low': l,
+                ltemp = get_distance(doc['text'],pair[0],pair[1])
+                if ltemp: l.append(ltemp)
+                
+            if len(c) >0 and len(l) == 0:
+                results.append({'distance_criminal': c,
                                     'doctype':doc['doctype'],
                                     'publication_date':doc['publication_date']})
+            elif len(c) == 0 and len(l) > 0:
+                results.append({'distance_low': l,
+                                    'doctype':doc['doctype'],
+                                    'publication_date':doc['publication_date']})
+            elif len(c) >0 and len(l) > 0:
+                results.append({'distance_criminal': c,
+                                'distance_los':l,
+                                    'doctype':doc['doctype'],
+                                    'publication_date':doc['publication_date']})
+
             yield results
 
 
@@ -118,7 +131,6 @@ if __name__ == "__main__":
 
         for result in distgen:
             if len(result)>0:
-                # print(result)
                 fo.write(json.dumps(result))
                 fo.write(',\n')
         fo.write('[]]')
