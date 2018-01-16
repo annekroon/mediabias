@@ -21,11 +21,22 @@ class train_model():
         self.doctype = doctype
         self.fromdate = fromdate
         self.todate = todate
-        self.query = {
+        if type(self.doctype) is str:
+            self.query = {
                   "query": {
                           "bool": {
                                     "filter": [
-                                                { "match": { "_type": self.doctype}},
+                                                { "match": { "doctype.keyword": self.doctype}},
+                                                { "range": { "publication_date": { "gte": self.fromdate, "lt":self.todate }}}
+                                              ]
+                                  }
+                        }
+                }
+        elif type(self.doctype) is list:           
+            self.query = {
+                  "query": {
+                          "bool": {
+                                    "filter": [ {'bool': {'should': [{ "match": { "doctype.keyword": d}} for d in self.doctype]}},
                                                 { "range": { "publication_date": { "gte": self.fromdate, "lt":self.todate }}}
                                               ]
                                   }
@@ -91,8 +102,8 @@ if __name__ == "__main__":
     #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "nrc (print)")
     #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "ad (print)")
 
-    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "telegraaf (print)")
-    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "nrc (print)")
-    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "ad (print)")
-    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "volkskrant (print)")
-    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "trouw (print)")
+    train_and_save(fromdate = "2015-01-01", todate = "2015-12-31", doctype = ["telegraaf (print)", 'nrc (print)'])
+    #train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "nrc (print)")
+    #train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "ad (print)")
+    #train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "volkskrant (print)")
+    #train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "trouw (print)")
