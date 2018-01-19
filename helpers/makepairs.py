@@ -8,9 +8,9 @@ and creates a new file with combinations of those
 
 import itertools
 
-crim = [line.strip() for line in open('ressources/words_crime.txt').readlines() if len(line)>1]
-low  = [line.strip() for line in open('ressources/words_lowlife.txt').readlines() if len(line)>1]
-targ  = [line.strip() for line in open('ressources/words_target.txt').readlines() if len(line)>1]
+crim = [line.strip() for line in open('../ressources/words_crime.txt').readlines() if len(line)>1]
+low  = [line.strip() for line in open('../ressources/words_lowlife.txt').readlines() if len(line)>1]
+targ  = [line.strip() for line in open('../ressources/words_target.txt').readlines() if len(line)>1]
 
 
 # remove duplicates

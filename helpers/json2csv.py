@@ -3,7 +3,7 @@
 import json
 import pandas as pd
 
-data = [item for sublist in json.load(open('../wordfreqs/output.json')) for item in sublist]
+data = [item for sublist in json.load(open('/Users/admin/gitprojects/mediabias/wordfreqs/final/output.json')) for item in sublist]
 
 print(len(data))
 df = pd.DataFrame.from_dict(data)
@@ -19,4 +19,3 @@ df['w2'] = df['pair'].map(lambda x: x[1])
 
 print(len(df))
 df.drop('oldshit',axis=1).to_csv('../wordfreqs/output.csv')
-
