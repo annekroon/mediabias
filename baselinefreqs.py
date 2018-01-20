@@ -21,5 +21,10 @@ for word in words:
                         "filter": [ {'bool': {'should': [{ "match": { "doctype.keyword": d}} for d in listofdoctypes]}},
                                           { "range": { "publication_date": { "gte": fromdate, "lt":todate }}}]}
             }}
-    df = analyzer.analyse(queries = q, granularity='year',timefield='publication_date', from_time='1991-01-01')
+
+    doctypequery = "doctype:"+" OR doctype:".join(['"{}"'.format(d) for d in listofdoctypes])
+    qs  = '{} AND ({})' .format(word,doctypequery)
+    print(qs)
+    
+    df = analyzer.analyse(queries = qs, granularity='year',timefield='publication_date',from_time='1991-01-01')
     df.to_csv('output/baselinecount-{}.csv'.format(word))
