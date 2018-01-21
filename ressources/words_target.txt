@@ -31,7 +31,16 @@ nederlanders
 westers
 burger
 burgers
-
+duitser
+duitsers
+pool
+polen
+christen
+christenen
+vluchteling
+vluchtelingen
+belg
+belgen
 
 
 
