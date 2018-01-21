@@ -4,8 +4,6 @@ armoedig
 barbaars
 dakloze
 daklozen
-dienders
-dommer
 drugsgebruiker
 drugsverslaafde
 drugsverslaafden
@@ -24,7 +22,6 @@ probleemjongeren
 reljongeren
 sloeber
 spijbelen
-stoffig
 straatarm
 straatkinderen
 verslaafden
@@ -86,7 +83,6 @@ bijstandsgerechtigden
 boerenlul
 dakloze
 daklozen
-diender
 drugsgebruikers
 drugstoeristen
 drugsverslaafden
@@ -149,7 +145,6 @@ analfabeten
 bastaardzoon
 bedelaars
 bijstandsgerechtigden
-broodmagere
 daklozen
 dronkelap
 drugsgebruikers
@@ -171,7 +166,6 @@ ongeschoolde
 primitief
 probleemjongeren
 schoolverlaters
-segregatie
 sloeber
 straatkinderen
 sukkel
@@ -186,3 +180,9 @@ werkloze
 werklozen
 zwerver
 zwervers
+hoer
+pooier
+prostituee
+prostituees
+prostitutiebedrijven
+straatprostitutie
