@@ -29,6 +29,7 @@ expats
 nederlander
 nederlanders
 westers
+westerlingen
 burger
 burgers
 duitser
