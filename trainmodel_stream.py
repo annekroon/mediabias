@@ -97,13 +97,13 @@ if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
     logging.root.setLevel(level=logging.INFO)
 
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "telegraaf (print)")
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "volkskrant (print)")
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "nrc (print)")
-    #train_and_save(fromdate = "2006-01-01", todate = "2016-01-01", doctype = "ad (print)")
+    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "telegraaf (print)")
+    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "volkskrant (print)")
+    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "nrc (print)")
+    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "ad (print)")
+    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "trouw (print)")
 
-
-    train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = ['telegraaf (print)', 'nrc (print)', 'volkskrant (print)', 'ad (print)', 'trouw (print)'])
+    #train_and_save(fromdate = "2000-01-01", todate = "2015-12-31", doctype = ['telegraaf (print)', 'nrc (print)', 'volkskrant (print)', 'ad (print)', 'trouw (print)'])
     #train_and_save(fromdate = "2000-01-01", todate = "2000-12-31", doctype = ['telegraaf (print)', 'nrc (print)', 'volkskrant (print)', 'ad (print)', 'trouw (print)'])
     #train_and_save(fromdate = "2001-01-01", todate = "2001-12-31", doctype = ['telegraaf (print)', 'nrc (print)', 'volkskrant (print)', 'ad (print)', 'trouw (print)'])
     #train_and_save(fromdate = "2002-01-01", todate = "2002-12-31", doctype = ['telegraaf (print)', 'nrc (print)', 'volkskrant (print)', 'ad (print)', 'trouw (print)'])
