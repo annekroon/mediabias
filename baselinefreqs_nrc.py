@@ -8,7 +8,7 @@ words = [w.strip() for w in open('ressources/words_target.txt').readlines() if l
 
 fromdate = '2000-01-01'
 todate = '2017-12-31'
-listofdoctypes = 'nrc (print)'
+listofdoctypes = ['trouw (print)']
 
 
 analyzer = inca.analysis.timeline_analysis.timeline_generator()
@@ -27,4 +27,4 @@ for word in words:
     print(qs)
     
     df = analyzer.analyse(queries = qs, granularity='year',timefield='publication_date',from_time='1991-01-01')
-    df.to_csv('output/baselinecount-{}.csv'.format(word))
+    df.to_csv('output/trouw/baselinecount-{}.csv'.format(word))

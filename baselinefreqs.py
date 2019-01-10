@@ -27,4 +27,4 @@ for word in words:
     print(qs)
     
     df = analyzer.analyse(queries = qs, granularity='year',timefield='publication_date',from_time='1991-01-01')
-    df.to_csv('output/baselinecount-{}.csv'.format(word))
+    df.to_csv('output/total/baselinecount-{}.csv'.format(word))

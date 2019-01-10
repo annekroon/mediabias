@@ -121,11 +121,11 @@ if __name__ == "__main__":
     logging.root.setLevel(level=logging.INFO)
 
 
-    casus = cooc(fromdate = "2000-01-01", todate = "2015-12-31", doctype = "telegraaf (print)")
+    casus = cooc(fromdate = "2000-01-01", todate = "2015-12-31", doctype = ['ad (print)', 'telegraaf (print)', 'nrc (print)', 'volkskrant (print)', 'trouw (print)'])
 
     distgen = casus.distances_per_document()
 
-    with open(PATH+'output_wordfreqs_telegraaf.json',mode='w') as fo:
+    with open(PATH+'output_wordfreqs_all.json',mode='w') as fo:
         fo.write('[')
 
         for result in distgen:
